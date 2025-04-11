@@ -2,7 +2,14 @@ import { Stack } from "expo-router";
 
 import { colors } from "@/constants/colors";
 import { useColorScheme } from "@/lib/useColorScheme";
+import { useEffect } from 'react';
+import { fetchAndCacheProducts } from '../../storage/localCache';
 
+
+useEffect(() => {
+	fetchAndCacheProducts();
+  }, []);
+  
 export const unstable_settings = {
 	initialRouteName: "(root)",
 };
