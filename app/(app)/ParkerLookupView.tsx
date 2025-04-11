@@ -1,3 +1,4 @@
+// app/(app)/ParkerLookupView.tsx
 import React, { useEffect, useState } from 'react';
 import {
   Text,
@@ -9,6 +10,8 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { getCachedProducts } from '@/storage/localCache';
+import { router } from 'expo-router';
+
 
 interface Product {
   id: string;
@@ -20,7 +23,7 @@ export default function ParkerLookupView(): JSX.Element {
   const [products, setProducts] = useState<Product[]>([]);
   const [filtered, setFiltered] = useState<Product[]>([]);
   const [query, setQuery] = useState('');
-  const navigation = useNavigation();
+  const router = useRouter();
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -64,7 +67,7 @@ export default function ParkerLookupView(): JSX.Element {
           </View>
         )}
         renderItem={({ item, index }) => (
-          <TouchableOpacity onPress={() => navigation.navigate('ProductDetails', { product: item })}>
+          <TouchableOpacity onPress={() => router.push(`/product/${item.product_id}`)}>
             <View className={`flex-row py-2 border-b border-gray-200 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
               <Text className="flex-1 text-base">{item.part_number || '-'}</Text>
               <Text className="flex-1 text-base">{item.parker_part_number || '-'}</Text>

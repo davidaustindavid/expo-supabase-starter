@@ -15,6 +15,7 @@ import NetInfo from '@react-native-community/netinfo';
 import { supabase } from '@/config/supabase';
 import { getCachedProducts } from '@/storage/localCache';
 import type { Product } from '../types';
+import { router } from 'expo-router';
 
 export default function SearchView(): JSX.Element {
   const [query, setQuery] = useState('');
@@ -97,7 +98,7 @@ export default function SearchView(): JSX.Element {
     setQuery('');
     setFiltered([]);
   };
-  const goToBrowseOptions = () => navigation.navigate('Browse');
+  const goToBrowseOptions = () => router.push('/(app)/BrowseOptionsView');
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} className="flex-1 p-4">
@@ -116,8 +117,8 @@ export default function SearchView(): JSX.Element {
               const value = getMatchValue(item);
               return (
                 <TouchableOpacity
-                  onPress={() => navigation.navigate('ProductDetails', { product: item })}
-                  className="py-3 border-b border-gray-200"
+                onPress={() => router.push(`/product/${item.product_id}`)}
+                className="py-3 border-b border-gray-200"
                 >
                   <Text className="text-lg font-medium">{value}</Text>
                   <Text className="text-sm text-gray-500 mt-1">{label}</Text>

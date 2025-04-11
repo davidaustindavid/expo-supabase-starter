@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, FlatList } from 'react-native';
 import ProductCard from '@/components/ProductCard';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { router } from 'expo-router';
 import type { Product } from '../../types';
 
 export default function ResultsView(): JSX.Element {
@@ -24,8 +25,8 @@ export default function ResultsView(): JSX.Element {
           renderItem={({ item }) => (
             <ProductCard
               product={item}
-              onPress={() => router.push({ pathname: '/product-details', params: { product: JSON.stringify(item) } })}
-            />
+              onPress={() => router.push(`/product/${item.product_id}`)}
+              />
           )}
         />
       )}
