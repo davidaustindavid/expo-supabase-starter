@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, ScrollView, Image } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 import type { Product } from '../types';
 
 export default function ProductDetailsView(): JSX.Element {

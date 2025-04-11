@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { getCachedProducts } from '../storage/localCache';
+import { getCachedProducts } from '@/storage/localCache';
 
 interface Product {
   id: string;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Picker, Button, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { getCachedProducts } from '../storage/localCache';
+import { useRouter } from 'expo-router';
+import { getCachedProducts, fetchAndCacheProducts } from '../../storage/localCache';
 import type { Product } from '../types';
 
 export default function FilterView(): JSX.Element {

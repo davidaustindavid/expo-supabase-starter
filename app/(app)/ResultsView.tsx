@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, FlatList } from 'react-native';
-import ProductCard from '../../components/ProductCard';
+import ProductCard from '@/components/ProductCard';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import type { Product } from '../../types';
 

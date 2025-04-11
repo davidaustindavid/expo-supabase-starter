@@ -12,8 +12,8 @@ import {
 import SearchBar from '../../components/SearchBar';
 import { useNavigation } from '@react-navigation/native';
 import NetInfo from '@react-native-community/netinfo';
-import { supabase } from '../lib/supabaseClient';
-import { getCachedProducts } from '../storage/localCache';
+import { supabase } from '@/config/supabase';
+import { getCachedProducts } from '@/storage/localCache';
 import type { Product } from '../types';
 
 export default function SearchView(): JSX.Element {
