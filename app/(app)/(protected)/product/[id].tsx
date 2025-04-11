@@ -2,7 +2,7 @@ import { useLocalSearchParams } from 'expo-router';
 import { View, Text, ScrollView } from 'react-native';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/config/supabase';
-import { Product } from '@/types';
+import { Product } from '@/types/Product';
 
 export default function ProductDetails() {
   const { id } = useLocalSearchParams<{ id: string }>();

@@ -11,12 +11,7 @@ import {
 import { useNavigation } from 'expo-router';
 import { getCachedProducts } from '@/storage/localCache';
 import { router } from 'expo-router';
-
-interface Product {
-  id: string;
-  part_number?: string;
-  swagelok_part_number?: string;
-}
+import { Product } from '@/types/Product';
 
 export default function SwagelokLookupView(): JSX.Element {
   const [products, setProducts] = useState<Product[]>([]);
@@ -58,7 +53,7 @@ export default function SwagelokLookupView(): JSX.Element {
       />
       <FlatList
         data={filtered}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.product_id}
         ListHeaderComponent={() => (
           <View className="flex-row bg-gray-100 py-2 border-b border-gray-300">
             <Text className="flex-1 font-bold text-base">TGCI Part #</Text>

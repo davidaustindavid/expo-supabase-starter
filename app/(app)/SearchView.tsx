@@ -10,19 +10,18 @@ import {
   Button,
 } from 'react-native';
 import SearchBar from '../../components/SearchBar';
-import { useNavigation } from '@react-navigation/native';
 import NetInfo from '@react-native-community/netinfo';
 import { supabase } from '@/config/supabase';
 import { getCachedProducts } from '@/storage/localCache';
-import type { Product } from '../types';
 import { router } from 'expo-router';
+import type { Product, Brand, Category, ProductImage } from '@/types';
 
 export default function SearchView(): JSX.Element {
   const [query, setQuery] = useState('');
   const [products, setProducts] = useState<Product[]>([]);
   const [filtered, setFiltered] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
-  const navigation = useNavigation();
+
 
   useEffect(() => {
     const loadCached = async () => {
@@ -93,7 +92,10 @@ export default function SearchView(): JSX.Element {
     return product.product_name;
   };
 
-  const goToResults = () => navigation.navigate('Results', { results: filtered });
+  const goToResults = () => {
+    const resultString = JSON.stringify(filtered);
+    router.push({ pathname: '/(app)/ResultsView', params: { results: resultString } });
+  };  
   const clearSearch = () => {
     setQuery('');
     setFiltered([]);
@@ -111,7 +113,7 @@ export default function SearchView(): JSX.Element {
         filtered.length > 0 && (
           <FlatList
             data={filtered.slice(0, 10)}
-            keyExtractor={item => item.id?.toString() || item.sku || Math.random().toString()}
+            keyExtractor={item => item.product_id?.toString() || item.sku || Math.random().toString()}
             renderItem={({ item }) => {
               const label = getMatchLabel(item);
               const value = getMatchValue(item);
