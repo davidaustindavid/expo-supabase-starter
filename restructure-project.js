@@ -1,3 +1,5 @@
+// scripts/restructure-project.js
+
 const fs = require('fs');
 const path = require('path');
 
@@ -15,15 +17,6 @@ const ensureFolder = (dir) => {
   }
 };
 
-const renameFile = (oldPath, newPath) => {
-  if (fs.existsSync(oldPath)) {
-    fs.renameSync(oldPath, newPath);
-    console.log(`✅ Renamed: ${oldPath} → ${newPath}`);
-  } else {
-    console.warn(`⚠️ File not found: ${oldPath}`);
-  }
-};
-
 const moveFile = (source, destination) => {
   if (fs.existsSync(source)) {
     ensureFolder(path.dirname(destination));
@@ -34,33 +27,8 @@ const moveFile = (source, destination) => {
   }
 };
 
-const processDirectory = (dir) => {
-  fs.readdirSync(dir).forEach((file) => {
-    const fullPath = path.join(dir, file);
-    const stat = fs.statSync(fullPath);
-
-    if (stat.isDirectory()) {
-      processDirectory(fullPath);
-    } else if (stat.isFile()) {
-      const kebabFileName = kebabCase(file);
-      if (file !== kebabFileName) {
-        const newFullPath = path.join(dir, kebabFileName);
-        renameFile(fullPath, newFullPath);
-      }
-    }
-  });
-};
-
 const run = () => {
   console.log('🔧 Starting project restructuring...');
-
-  // Process the components directory for kebab-case renaming
-  const componentsDir = path.join(__dirname, 'components');
-  if (fs.existsSync(componentsDir)) {
-    processDirectory(componentsDir);
-  } else {
-    console.warn(`⚠️ Directory not found: ${componentsDir}`);
-  }
 
   // Define the files to move and their destinations
   const filesToMove = [
@@ -91,6 +59,10 @@ const run = () => {
   filesToMove.forEach(({ source, destination }) => {
     moveFile(source, destination);
   });
+
+  // Create additional directories if they don't exist
+  const directories = ['components', 'hooks', 'utils', 'constants', 'enums', 'types'];
+  directories.forEach((dir) => ensureFolder(dir));
 
   console.log('🎉 Project restructuring complete!');
 };
