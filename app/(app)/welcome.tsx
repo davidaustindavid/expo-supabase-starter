@@ -1,98 +1,49 @@
-const fs = require('fs');
-const path = require('path');
+import { useRouter } from "expo-router";
+import React from "react";
+import { View } from "react-native";
 
-const kebabCase = (str) =>
-  str &&
-  str
-    .replace(/([a-z])([A-Z])/g, '$1-$2')
-    .replace(/[\s_]+/g, '-')
-    .toLowerCase();
+import { Image } from "@/components/image";
+import { SafeAreaView } from "@/components/safe-area-view";
+import { Button } from "@/components/ui/button";
+import { Text } from "@/components/ui/text";
+import { H1, Muted } from "@/components/ui/typography";
 
-const ensureFolder = (dir) => {
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-    console.log(`📁 Created folder: ${dir}`);
-  }
-};
+export default function WelcomeScreen() {
+	const router = useRouter();
 
-const renameFile = (oldPath, newPath) => {
-  if (fs.existsSync(oldPath)) {
-    fs.renameSync(oldPath, newPath);
-    console.log(`✅ Renamed: ${oldPath} → ${newPath}`);
-  } else {
-    console.warn(`⚠️ File not found: ${oldPath}`);
-  }
-};
-
-const moveFile = (source, destination) => {
-  if (fs.existsSync(source)) {
-    ensureFolder(path.dirname(destination));
-    fs.renameSync(source, destination);
-    console.log(`✅ Moved: ${source} → ${destination}`);
-  } else {
-    console.warn(`⚠️ File not found: ${source}`);
-  }
-};
-
-const processDirectory = (dir) => {
-  fs.readdirSync(dir).forEach((file) => {
-    const fullPath = path.join(dir, file);
-    const stat = fs.statSync(fullPath);
-
-    if (stat.isDirectory()) {
-      processDirectory(fullPath);
-    } else if (stat.isFile()) {
-      const kebabFileName = kebabCase(file);
-      if (file !== kebabFileName) {
-        const newFullPath = path.join(dir, kebabFileName);
-        renameFile(fullPath, newFullPath);
-      }
-    }
-  });
-};
-
-const run = () => {
-  console.log('🔧 Starting project restructuring...');
-
-  // Process the components directory for kebab-case renaming
-  const componentsDir = path.join(__dirname, 'components');
-  if (fs.existsSync(componentsDir)) {
-    processDirectory(componentsDir);
-  } else {
-    console.warn(`⚠️ Directory not found: ${componentsDir}`);
-  }
-
-  // Define the files to move and their destinations
-  const filesToMove = [
-    {
-      source: 'app/SearchView.tsx',
-      destination: 'app/(tabs)/search.tsx',
-    },
-    {
-      source: 'app/BrowseOptionsView.tsx',
-      destination: 'app/(tabs)/browse-options.tsx',
-    },
-    {
-      source: 'app/ResultsView.tsx',
-      destination: 'app/(tabs)/results.tsx',
-    },
-    {
-      source: 'app/InformationView.tsx',
-      destination: 'app/(tabs)/information.tsx',
-    },
-    {
-      source: 'app/ProductDetailsView.tsx',
-      destination: 'app/product/[id].tsx',
-    },
-    // Add more files as needed
-  ];
-
-  // Move the files
-  filesToMove.forEach(({ source, destination }) => {
-    moveFile(source, destination);
-  });
-
-  console.log('🎉 Project restructuring complete!');
-};
-
-run();
+	return (
+		<SafeAreaView className="flex flex-1 bg-background p-4">
+			<View className="flex flex-1 items-center justify-center gap-y-4 web:m-4">
+				<Image
+					source={require("@/assets/icon.png")}
+					className="w-16 h-16 rounded-xl"
+				/>
+				<H1 className="text-center">Welcome to Expo Supabase Starter</H1>
+				<Muted className="text-center">
+					A comprehensive starter project for developing React Native and Expo
+					applications with Supabase as the backend.
+				</Muted>
+			</View>
+			<View className="flex flex-col gap-y-4 web:m-4">
+				<Button
+					size="default"
+					variant="default"
+					onPress={() => {
+						router.push("/sign-up");
+					}}
+				>
+					<Text>Sign Up</Text>
+				</Button>
+				<Button
+					size="default"
+					variant="secondary"
+					onPress={() => {
+						router.push("/sign-in");
+					}}
+				>
+					<Text>Sign In</Text>
+				</Button>
+			</View>
+		</SafeAreaView>
+	);
+}

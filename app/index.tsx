@@ -17,7 +17,7 @@ export default function Home() {
 				className="w-full"
 				variant="default"
 				size="default"
-				onPress={() => router.push("/(app)/SearchView")}
+				onPress={() => router.push("/(tabs)/search")}
 			>
 				<Text>Open Modal</Text>
 			</Button>

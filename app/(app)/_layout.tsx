@@ -19,7 +19,7 @@ export default function AppLayout() {
 
 	return (
 		<Stack screenOptions={{ headerShown: true, gestureEnabled: true }}>
-			<Stack.Screen name="(protected)" />
+			<Stack.Screen name="(app)" />
 			<Stack.Screen name="welcome" />
 			<Stack.Screen
 				name="sign-up"
