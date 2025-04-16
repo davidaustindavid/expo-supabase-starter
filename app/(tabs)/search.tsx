@@ -94,13 +94,13 @@ export default function SearchView(): JSX.Element {
 
   const goToResults = () => {
     const resultString = JSON.stringify(filtered);
-    router.push({ pathname: '/(app)/ResultsView', params: { results: resultString } });
+    router.push({ pathname: '/ResultsView', params: { results: resultString } });
   };  
   const clearSearch = () => {
     setQuery('');
     setFiltered([]);
   };
-  const goToBrowseOptions = () => router.push('/(app)/BrowseOptionsView');
+  const goToBrowseOptions = () => router.push('/browse-options');
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} className="flex-1 p-4">
